@@ -110,7 +110,151 @@ It can be used together with the useState Hook to share state between deeply nes
 
 ![images](https://github.com/MohdAqib8267/React.js/assets/106628860/3a8b76ba-a777-4dfb-a27d-82dc0945e9d2)
 
+>in Parent comp:
+> To create context, you must Import createContext and initialize it:
+import { useState, createContext } from "react";
 
+const UserContext = createContext()
+> Next we'll use the Context Provider to wrap the tree of components that need the state Context and and supply the state value
+> In child comp:
+In order to use the Context in a child component, we need to access it using the useContext Hook.
+>import { useState, createContext, useContext } from "react";
+>  const user = useContext(UserContext);
+> Then you can access the user Context in all components:
+
+```
+<!-- eg1 [ pass data from parent to childs] -->
+<!-- App.js -->
+import React,{ createContext,useState }  from 'react';
+import Child from "./Components/Child";
+import Child2 from './Components/Child2';
+
+export const grlobalInfo = createContext();
+function App() {
+  const [color,setColor]=useState('green');
+  return (
+    <grlobalInfo.Provider value={{appColor:color}}>
+    <div className='App'>
+      <h1>Parent</h1>
+      <Child />
+      <Child2 />
+      <button onClick={()=>setColor('red')}>Red</button>
+      <button onClick={()=>setColor('green')}>green</button>
+    </div>
+    </grlobalInfo.Provider>
+  )
+}
+
+export default App
+
+<!-- first child of App.js -->
+
+import React,{useContext} from 'react'
+import { grlobalInfo } from '../App';
+import SuperChild from './SuperChild';
+const Child = () => {
+    const {appColor}=useContext(grlobalInfo);
+    console.log(appColor);
+  return (
+    <div className='child'>
+      <h1 style={{backgroundColor:appColor}}>child component 1</h1>
+      <SuperChild />
+    </div>
+  )
+}
+
+export default Child
+ 
+ <!-- Super child of child1 -->
+ import React,{useContext} from 'react'
+import { grlobalInfo } from '../App'
+
+const SuperChild = () => {
+    const {appColor}=useContext(grlobalInfo);
+  return (
+    <div>
+      <h1 style={{background:appColor}}>SuperChild of child1</h1>
+    </div>
+  )
+}
+
+export default SuperChild
+
+<!-- child 2 of App.js -->
+
+import React,{useContext} from 'react'
+import { grlobalInfo } from '../App';
+
+const Child2 = () => {
+    const {appColor}=useContext(grlobalInfo);
+    console.log(appColor);
+  return (
+    <div className='child'>
+      <h1 style={{backgroundColor:appColor}}>child component 2</h1>
+      
+    </div>
+  )
+}
+
+export default Child2
+
+
+<!-- pass Data from child to parent -->
+
+<!-- Here pass day from child to App -->
+<!-- App.js -->
+export const grlobalInfo = createContext();
+function App() {
+  const [color,setColor]=useState('green');
+  const [day,setDay]=useState("Monday")
+  const getDay=(item)=>{
+    // console.log(item);
+    setDay(item);
+  }
+  return (
+    <grlobalInfo.Provider value={{appColor:color,getDay:getDay}}>
+    <div className='App'>
+      <h1>Parent {day}</h1>
+      <Child />
+      <Child2 />
+      <button onClick={()=>setColor('red')}>Red</button>
+      <button onClick={()=>setColor('green')}>green</button>
+    </div>
+    </grlobalInfo.Provider>
+  )
+}
+
+export default App
+
+<!-- child.js -->
+import React,{useContext} from 'react'
+import { grlobalInfo } from '../App';
+import SuperChild from './SuperChild';
+const Child = () => {
+    const {appColor,getDay}=useContext(grlobalInfo);
+    const day="sunday";
+    console.log(appColor);
+  return (
+    <div className='child'>
+      <h1 style={{backgroundColor:appColor}}>child component 1</h1>
+      <button onClick={()=>getDay(day)}>click me</button>
+      <SuperChild />
+    </div>
+  )
+}
+
+export default Child
+
+
+```
+#### Difference btw Context Api vs Redux
+
+| Context Api   | Redux |
+| ------------- | ------------- |
+| Inbuilt in React  | require external javascrpt library  |
+| Require minimal setup  | Requires extensive setup to integrate it with a React Application  |
+| It can be applied at a all application or a perticular no of components | It applied complete App |
+| UI logic and State Management Logic are in the same component |  Better code organization with separate UI logic and State Management Logic |
 
 
 
