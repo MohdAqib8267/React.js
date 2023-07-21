@@ -463,10 +463,13 @@ export default App;
 
 ```
 > When you click the increment button, the Todos component re-renders.
+> 
 >If this component was complex, it could cause performance issues.
 > #### Solution;
 >To fix this, we can use memo.
+>
 >Use memoto keep the Todos component from needlessly re-rendering.
+> 
 >Wrap the Todos component export in memo:
 ```
 import React from 'react'
