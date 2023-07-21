@@ -297,10 +297,13 @@ export default App
 ```
 ## React useCallback Hook
 > The React useCallback Hook returns a memoized callback function.
+
 > memoization as caching a value so that it does not need to be recalculated.
+> 
 > This allows us to isolate resource intensive functions so that they will not automatically run on every render.
+> 
 > The useCallback Hook only runs when one of its dependencies update.
->This can improve performance.
+> This can improve performance.
 
 > ###### Why Use:- One reason to use useCallback is to prevent a component from re-rendering unless its props have changed.
 
