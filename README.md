@@ -490,5 +490,146 @@ const Todos = ({ todos }) => {
   
   export default memo(Todos);
 ```
+## UseRef hook
+>1. The useRef is a hook that allows to directly create a reference to the DOM element in the functional component. 
+>2. It can be used to access a DOM element directly.
+>3. Focus, color, value etc handle with useRef
 
+
+```
+import React,{useRef} from "react";
+
+
+const App = () => {
+  let inputRef = useRef(null);
+  const handleInput=()=>{
+    // console.log(inputRef.current);
+    inputRef.current.focus();
+    inputRef.current.style.color="blue";
+  }
+  return (
+    <>
+     <h1>UseRef</h1>
+     <input type="text" ref={inputRef}/>
+     <button onClick={handleInput}>Handle Input</button>
+    </>
+  );
+};
+
+export default App;
+
+```
+## UseReducer hook
+> UseReducer us hook, that allows you to manage the states of components. Basically, It's an alternative of useState, They both create states and update it.
+>But the difference is the way of update the state
+> In useState, we use setState function to update the state variable but in useReducer it's a little bit more complicated compared to useState. but actually, it makes your code much cleaner.
+
+> ##### When use UseSate and when useReducer
+> 1. when updated multiple state in a single function
+```
+<!-- eg1: App.js -->
+import React, { useState,useReducer } from 'react'
+import {INITIAL_STATE,postReducer} from "./Components/PostReducer"
+
+const App = () => {
+   // USING USESTATE
+  // const [loading,setLoading]=useState(false);
+  // const [error,setError]=useState(false);
+  // const [post,setPost] = useState({});
+
+  // const handleFetch=()=>{
+  //   setLoading(true);
+  //   setError(false);
+  //   fetch("https://jsonplaceholder.typicode.com/posts/1")
+  //   .then((res)=>
+  //     res.json()
+  //   ).then((data)=>{
+  //     setLoading(false)
+  //     setPost(data)
+  //     console.log(data);
+  //   }).catch((error)=>{
+  //     // console.log(error);
+  //     setLoading(false)
+  //     setError(true)
+  //   })
+  // }
+
+  //  //USING USEREDUCER
+  const [state,dispatch]=useReducer(postReducer,INITIAL_STATE);
+ 
+   const handleFetch=()=>{
+    dispatch({type:"FETCH_START"})
+    
+    fetch("")
+    .then((res)=>
+      res.json()
+    ).then((data)=>{
+      dispatch({type:"FETCH_SUCCESS",payload:data})
+      // console.log(data);
+    }).catch((error)=>{
+      // console.log(error);
+     dispatch({type:"FETCH_ERROR"})
+    })
+  }
+
+
+  return (
+    //USING USESTATE
+    // <div>
+    //   <button onClick={handleFetch}>{loading ? "Wait..." : "Fetch the post"}</button>
+    //   <p>{post?.title}</p>
+    //   <span>{error && "Something went wrong!"}</span>
+    // </div>
+
+    //USING USEREDUCER
+    <div>
+      <button onClick={handleFetch}>{state.loading ? "Wait..." : "Fetch the post"}</button>
+      <p>{state.post?.title}</p>
+      <span>{state.error && "Something went wrong!"}</span>
+    </div>
+
+  )
+}
+
+export default App
+
+
+<!-- PostReducer.js -->
+export const INITIAL_STATE={
+    loading:false,
+    post:{},
+    error:false,
+}
+
+export const postReducer=(state,action)=>{
+
+    switch(action.type){
+        case "FETCH_START":
+            console.log("fetch start");
+            return{
+                loading:true,
+                error:false,
+                post:{},
+            };
+        case "FETCH_SUCCESS":
+            console.log("fetch success");
+            return{
+                ...state,
+                loading:false,
+               
+                post:action.payload,
+            }
+        case "FETCH_ERROR":
+            console.log("error");
+            return{
+                loading:false,
+                error:true,
+                post:{},
+            }   
+        default:     
+            return state;     
+    }
+}
+
+```
 
