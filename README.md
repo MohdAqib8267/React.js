@@ -256,5 +256,233 @@ export default Child
 | It can be applied at a all application or a perticular no of components | It applied complete App |
 | UI logic and State Management Logic are in the same component |  Better code organization with separate UI logic and State Management Logic |
 
+## React useMemo Hook
+> The React useMemo Hook returns a memoized value.
+>  memoization as caching a value so that it does not need to be recalculated.
+> The useMemo Hook only runs when one of its dependencies update.
+> This can improve performance.
+> ###### The useMemo and useCallback Hooks are similar. The main difference is that useMemo returns a memoized value and useCallback returns a memoized function.
+
+<!-- eg1 -->
+```
+multiCnt function should call when click on update count button but its calling when click on both button. so we will use useMemo hook to call only when click on update Count button. and make as a function multiCntMemo that use as a callback of multicnt.
+
+import React,{useState,useMemo} from "react";
+
+const App=()=>{
+  const [cnt,setCnt]=useState(0);
+  const [item,setItem]=useState(0);
+
+  const multiCntMemo=useMemo(function multiCnt(){
+    console.log("mutliCnt");
+    return cnt*5;
+  },[cnt]);
+  
+  return(
+    <div className="App">
+      <h1>UseMemo Hook </h1>
+      <h1>Count:{cnt} </h1>
+      <h1>item:{item} </h1>
+      {/* <h2>{multiCnt()}</h2> */}
+      <h2>{multiCntMemo}</h2>
+      <button onClick={()=>setCnt(cnt+1)}>Update Count</button>
+      <button onClick={()=>setItem(item+1)}>Update Item</button>
+    </div>
+  )
+}
+
+
+export default App
+
+```
+## React useCallback Hook
+> The React useCallback Hook returns a memoized callback function.
+> memoization as caching a value so that it does not need to be recalculated.
+> This allows us to isolate resource intensive functions so that they will not automatically run on every render.
+> The useCallback Hook only runs when one of its dependencies update.
+>This can improve performance.
+
+> ###### Why Use:- One reason to use useCallback is to prevent a component from re-rendering unless its props have changed.
+
+```
+<!-- isme jab me count button(+) per bhi click kar rha hu to bhi child(todo) component render ho rha jabki usko nhi hona chahye woh change tab hona chhaye jab uske props change ho so that's why use useCallback hook -->
+import { useState } from "react";
+import Todos from "./Components/Todos";
+
+const App = () => {
+  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState([]);
+
+  const increment=()=>{
+    setCount((c)=>c+1);
+  };
+  const addTodo=()=>{
+    setTodos((t)=>[
+      ...t,
+      "New Todo"
+    ])
+  }
+  return (
+    <div>
+      <Todos todos={todos} addTodo={addTodo}/>
+      <hr />
+      <div>
+        Count:{count}
+        <button onClick={increment}>+</button>
+      </div>
+    </div>
+  )
+}
+
+export default App
+
+<!-- Todo.jsx -->
+const Todos = ({todos,addTodo}) => {
+    console.log("child render");
+  return (
+    <div>
+        <h2>My Todos</h2>
+        {todos.map((todo,index)=>{
+            return(
+                <p key={index}>{todo}</p>
+            )
+        })}
+        <button onClick={addTodo}>Add Todo</button>
+    </div>
+  )
+}
+
+export default Todos
+
+```
+>##### solution: To fix this, we can use the useCallback hook to prevent the function from being recreated (yha per todo baar baar ban jaa rha tha) unless necessary.
+
+```
+<!-- App.jsx -->
+import { useState,useCallback } from "react";
+import Todos from "./Components/Todos";
+
+const App = () => {
+  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState([]);
+
+  const increment=()=>{
+    setCount((c)=>c+1);
+  };
+
+  //useCall back return the memoize function
+  const addTodo= useCallback(()=>{
+    setTodos((t)=>[
+      ...t,
+      "New Todo"
+    ])
+  },[todos])
+  
+  return (
+    <div>
+      <Todos todos={todos} addTodo={addTodo}/>
+      <hr />
+      <div>
+        Count:{count}
+        <button onClick={increment}>+</button>
+      </div>
+    </div>
+  )
+}
+
+export default App
+
+<!-- todos.jsx -->
+import React from 'react'
+import { memo } from 'react'; // This lines is imp
+
+const Todos = ({todos,addTodo}) => {
+    console.log("child render");
+  return (
+    <div>
+        <h2>My Todos</h2>
+        {todos.map((todo,index)=>{
+            return(
+                <p key={index}>{todo}</p>
+            )
+        })}
+        <button onClick={addTodo}>Add Todo</button>
+    </div>
+  )
+}
+
+export default memo(Todos) // This lines is imp
+//because we memose function
+
+```
+
+## React memo
+> Using memo will cause React to skip rendering a component if its props have not changed.
+> This can improve performance.
+
+>
+solution: To fix this, we can use memo.
+Use memoto keep the Todos component from needlessly re-rendering.
+Wrap the Todos component export in memo:
+>
+
+##### Problem
+>In this example, the Todos component re-renders even when the todos have not changed.
+```
+<!-- App.js (no change: only iske child ya component me change) -->
+import { useState } from "react";
+import Todos from "./Components/Todos";
+
+
+
+const App = () => {
+  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState(["todo 1", "todo 2","todo3"]);
+
+  const increment = () => {
+    setCount((c) => c + 1);
+  };
+
+  return (
+    <>
+      <Todos todos={todos} />
+      <hr />
+      <div>
+        Count: {count}
+        <button onClick={increment}>+</button>
+      </div>
+    </>
+  );
+};
+
+export default App;
+
+
+```
+> When you click the increment button, the Todos component re-renders.
+>If this component was complex, it could cause performance issues.
+> #### Solution;
+>To fix this, we can use memo.
+>Use memoto keep the Todos component from needlessly re-rendering.
+>Wrap the Todos component export in memo:
+```
+import React from 'react'
+import { memo } from 'react';
+
+
+const Todos = ({ todos }) => {
+    console.log("child render");
+    return (
+      <>
+        <h2>My Todos</h2>
+        {todos.map((todo, index) => {
+          return <p key={index}>{todo}</p>;
+        })}
+      </>
+    );
+  };
+  
+  export default memo(Todos);
+```
 
 
