@@ -26,6 +26,20 @@ Server-side rendering (SSR) is the process of rendering web pages on the server 
 # Client-Side Rendering
 Client-side rendering (CSR) is the process of rendering web pages on the client using JavaScript. In this approach, the server sends the initial HTML file, but the client then uses JavaScript to dynamically update the page as needed. This allows for more interactive and responsive web pages, as the client can update specific parts of the page without needing to reload the entire page. example: Figma, Slack, Microsoft Outlook these are client-side rendering apps.
 
+# What is Ref:
+we know that, React create their Own Dom, and we have manipulate this DOM using state and props, we don't have directly access to modify the DOm. but sometime we need to update DOM direclty. like to foucs on a input element then we have use Ref because Ref give a direct access to control the element. This is not used as much as possible
+# React Fiber:
+React Fiber is a complete reimplementation of the React core algorithm designed to improve the performance and responsiveness of React applications, especially in handling large and complex component trees. 
+
+The term "Fiber" refers to the data structure used by React to represent the component tree. With the Fiber architecture, React can perform work in incremental steps, making it more flexible in managing updates. This allows React to interrupt and resume the rendering process, making it more efficient in handling asynchronous operations, animations, and other tasks without blocking the main thread.
+
+# Synthtic Events:
+In React, synthetic events refer to a cross-browser wrapper around the native browser events. React's event system normalizes and wraps native events to provide a consistent interface across different browsers and environments. These normalized events are referred to as synthetic events.
+(events like click on a button)
+
+# why were intriduced Hooks?
+React Hooks were introduced to address certain challenges and limitations in managing stateful logic and side effects in functional components. Before the introduction of Hooks, stateful logic in React components was primarily managed through class components and lifecycle methods. Hooks provide a more flexible and concise way to handle state and side effects in functional components.
+
 # React Hooks
 > Hooks allow function components to have access to state and other React features(like life cycle methods). Because of this, class components are generally no longer needed.
 ### Hook Rules
