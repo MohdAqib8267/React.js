@@ -1,5 +1,31 @@
 # React.js
 
+# React & How is different from other JavaScript Framework:-
+React is a JavaScript Library that works on virtual DOM that means it does not effect DOM directly. To increase the performance it uses virtual DOM. and the second thing is that React is view Oriented. it primerly focuses on what do you want to show user and how we can show through data. and the third thing is that react follows is unidirectional data flow, where data is flow in a single direction from parent components to child components and tha fourth and very important thing is that React encuorage a component based architecture. where UI's are broken down into modular and resuable components. and stacking these components we can design a complete page or App.
+
+*** Other JavaScript framework contains these facilities but they are all framworks, they have everything pre-build. React as a Library give facility to choose other things and make your own stack
+
+# Virtual DOM:-
+DOM refers to the Document Object Model that represents the content of XML or HTML documents as a tree structure.
+
+
+The Virtual DOM in React is a lightweight, in-memory representation of the actual DOM. When state or props change, React updates the Virtual DOM instead of the real DOM. Through a process called reconciliation, React identifies the differences and computes the most efficient way to update the real DOM. This minimizes direct manipulation of the DOM, improving performance and providing a consistent programming model across browsers. The Virtual DOM is a key optimization mechanism that enables React to efficiently update user interfaces.
+
+#### Reconciliation:
+Reconciliation is the process in React where it compares the current Virtual DOM representation of a component with its previous version to determine the minimal set of changes needed to update the actual DOM. When state or props change, React uses reconciliation to identify what parts of the UI need to be updated, added, or removed.
+
+The reconciliation algorithm efficiently computes the differences between the new and old Virtual DOM representations. It aims to minimize the number of changes required to bring the actual DOM.
+
+# State & Props:
+state is used to manage internally, mutable data within a component and when there is a chnage in state, the component is Re-render, while props are used for passing immutable(Read-only) data from parent to child components and whenever changes in props, the child is Re-render.Also we can pass the state as a props in child components. Both state and props play essential roles in building dynamic and interactive React applications.
+It is used for Data-heavy website and SEO friendly website like E-commerece, News website etc.
+
+# Server-Side Rendering
+Server-side rendering (SSR) is the process of rendering web pages on the server and sending the fully-rendered HTML to the client. In this approach, the server generates the HTML, including any dynamic data, and sends it to the client as a complete page. The client then displays the page without any further processing.
+
+# Client-Side Rendering
+Client-side rendering (CSR) is the process of rendering web pages on the client using JavaScript. In this approach, the server sends the initial HTML file, but the client then uses JavaScript to dynamically update the page as needed. This allows for more interactive and responsive web pages, as the client can update specific parts of the page without needing to reload the entire page. example: Figma, Slack, Microsoft Outlook these are client-side rendering apps.
+
 # React Hooks
 > Hooks allow function components to have access to state and other React features(like life cycle methods). Because of this, class components are generally no longer needed.
 ### Hook Rules
