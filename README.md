@@ -672,4 +672,35 @@ export const postReducer=(state,action)=>{
 }
 
 ```
+# Explain the MVC architecture?
+The Model-View-Controller (MVC) framework is a way of organizing code for web applications. It separates the application into three parts: the Model, the View, and the Controller. Each part has a specific job to do. The Model is responsible for storing and managing data. It represents the data in a way that is easy for the application to understand.
+# What in React are Higher-Order Components (HOC)?
+In React, a Higher-Order Component (HOC) is a function that takes a component and returns a new component with added functionality. HOCs enable code reuse, logic abstraction, and better organization by allowing you to enhance components with additional features.
 
+HOC may be utilised in the following usage cases:
+
+Reuse of code, reasoning, and bootstrap abstraction
+Represent Highjacking
+State manipulation and abstraction
+Props manipulation
+
+# Explain the lifecycle methods of components.
+getInitialState(): This is executed before the creation of the component.
+componentDidMount(): This is executed when the component gets rendered and placed on the DOM.
+shouldComponentUpdate(): This is invoked when a component determines changes to the DOM and returns a “true” or “false” value based on certain conditions.
+componentDidUpdate(): Is invoked immediately after rendering takes place.
+componentWillUnmount(): Is invoked immediately before a component is destroyed and unmounted permanently.
+
+# What is Redux?
+Redux is an open-source, JavaScript library used to manage the application state. React uses Redux to build the user interface. It is a predictable state container for JavaScript applications and is used for the entire application’s state management.
+
+# What are the components of Redux?
+Store: Holds the state of the application.
+Action: The source information for the store.
+Reducer: Specifies how the application’s state changes in response to actions sent to the store.
+
+ # Can you elaborate on the MongoDB Aggregation Pipeline?
+The MongoDB Aggregation Pipeline serves as a framework for data processing and transformation within MongoDB. It involves a series of sequential stages, facilitating operations like filtering, projection, grouping, and sorting on documents. Each stage in the pipeline processes the data and forwards the results to the subsequent stage/
+
+# Can you explain CORS?
+CORS stands for Cross-Origin Resource Sharing. It is a security feature implemented by web browsers that controls how web pages in one domain can request and interact with resources from another domain. In simpler terms, CORS is a set of rules that enable or restrict cross-origin requests between different domains.
